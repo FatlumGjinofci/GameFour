@@ -28,14 +28,15 @@
 <script>
 const OVER = 'over';
 
-import BoardChecker from './BoardChecker';
+import BoardChecker from './BoardChecker'
 export default {
-    props: ['checkers', 'col', 'color', 'cellSize', 'boardHeight', 
-            'checkerRadius', 'rowCount', 'mask', 'status'],
-    components: {
-        BoardChecker,
-    },
-    computed: {
+   props: ['checkers', 'col', 'color', 'cellSize', 'boardHeight', 'checkerRadius', 'rowCount', 'mask', 'status'],
+
+  components: {
+    BoardChecker,
+  },
+
+  computed: {
     // Find the current max occupied row and add 1
     nextOpenRow() {
       return Math.max(...this.checkers.map(c => c.row).concat(-1)) + 1;

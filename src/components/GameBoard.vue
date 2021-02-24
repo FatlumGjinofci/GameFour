@@ -33,10 +33,10 @@
 const cssUrl = id => `url(#${id})`;
 const range = num => [...Array(num).keys()];
 
-import BoardColumn from './BoardColumn'
 
+import BoardColumn from './BoardColumn';
 export default {
-    props: ['checkers', 'rowCount', 'colCount', 'status'],
+  props: ['checkers', 'rowCount', 'colCount', 'status'],
   components: {
     BoardColumn,
   },

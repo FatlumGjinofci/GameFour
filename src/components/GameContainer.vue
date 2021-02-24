@@ -37,24 +37,27 @@ const EMPTY = 'empty';
 const OVER = 'over';
 const PLAY = 'play';
 
-import GameBoard from './GameBoard'
+import GameBoard from './GameBoard';
+import Vue from 'vue';
 export default {
-    components: {
-        GameBoard
-    },
-    data() {
-        return {
-            checkers: {},
-            isLocked: false,
-            playerColor: RED,
-            rowCount: 6,
-            colCount: 7,
-            status: PLAY,
-            instructions: 'Click column to add balls',
-            winner: undefined,
-        }
-    },
-    computed: {
+  components: {
+    GameBoard,
+  },
+  
+  data() {
+    return {
+      checkers: {},
+      isLocked: false,
+      playerColor: RED,
+      rowCount: 6,
+      colCount: 7,
+      status: PLAY,
+      instructions: 'Click columns to add checkers',
+      winner: undefined,
+    };
+  },
+  
+  computed: {
     overMessage() {
       if (this.winner) {
         return `${titleize(this.winner.color)} wins!`;
@@ -96,7 +99,7 @@ export default {
     
     setChecker({ row, col }, attrs = {}) {
       const checker = this.getChecker({ row, col });
-      return this.$vue.set(this.checkers, key(row, col), { ...checker, ...attrs });
+      return Vue.set(this.checkers, key(row, col), { ...checker, ...attrs });
     },
     
     getChecker({ row, col }) {
@@ -104,9 +107,10 @@ export default {
     },
     
     drop({ col, row }) {
+      console.log(this.isLocked);
       if (this.isLocked) return;
       
-      this.isLocked = true;
+      // this.isLocked = true;
       const color = this.playerColor;
       
       console.log('setting checker', key(row, col), { row, col, color });
@@ -117,6 +121,7 @@ export default {
     },
     
     land() {
+      console.log('test')
       if (this.isDraw) return this.displayDraw();
       
       if (this.winner) {
@@ -124,6 +129,8 @@ export default {
       } else {
         this.isLocked = false;
       }
+      console.log(this.isLocked);
+
     },
     
     checkForDraw() {
@@ -146,7 +153,7 @@ export default {
       }    
     },
     
-    checkVerticalSegments({ focalRow, focalCol, minRow }) {
+    checkVerticalSegments({ focalRow, focalCol, minRow,  }) {
       for (let col = focalCol, row = minRow; row <= focalRow; row++) {
         const winner = this.getWinner([row, col], [row+1, col], [row+2, col], [row+3, col]);
         if (winner) return winner;

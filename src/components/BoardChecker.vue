@@ -14,23 +14,25 @@
 
 <script>
 const OVER = 'over';
-
 export default {
-    data() {
-        return {
-            colorHexes: {
-                red: '#FC7E69',
-                black: '#254689',
-                green: 'green',
-            },
-        }
-    },
-    computed: {
-        row() { return this.checker.row; },
-        col() { return this.checker.col; },
-        color() { return this.checker.color; },
-        isWinner() { return this.checker.isWinner; },
-    },
+  props: ['checker', 'cellSize', 'rowCount', 'checkerRadius', 'status'],
+
+  data() {
+    return {
+      colorHexes: {
+        red: '#FC7E69',
+        black: '#254689',
+        green: 'green',
+      },
+    };
+  },
+
+  computed: {
+    row() { return this.checker.row; },
+    col() { return this.checker.col; },
+    color() { return this.checker.color; },
+    isWinner() { return this.checker.isWinner; },
+
     adjustedColor() {
       return this.colorHexes[this.color];
     },
@@ -62,23 +64,23 @@ export default {
     duration() {
       return 0.2 + 0.4 * this.percentage;
     },
-    
-    methods: {
-        enter(el, done) {
-            const fromParams = { y: this.fromY };
-            const destParams = {
-                y: this.destY,
-                // ease: Bounce.easeOut,
-                onComplete: () => {
-                this.$emit('land');
-                done();
-                },
-            };
+  },
 
-            return el, this.duration, fromParams, destParams;
+  methods: {
+    enter(el, done) {
+      const fromParams = { y: this.fromY };
+      const destParams = {
+        y: this.destY,
+        // ease: Bounce.easeOut,
+        onComplete: () => {
+          this.$emit('land');
+          done();
         },
+      };
 
-    }
+      return el, this.duration, fromParams, destParams;
+    },
+  },
 }
 </script>
 
